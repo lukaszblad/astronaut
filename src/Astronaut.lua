@@ -13,25 +13,26 @@ function Astronaut:init()
     self.dx = 0
     self.dy = 0
 
-    self.speed = 200
-    
+    self.vertical_speed = 0
+    self.horizontal_speed = 0
+
 end
 
 function Astronaut:update(dt)
 
     -- detect movement and update velocity
     if love.keyboard.isDown('w') or love.keyboard.isDown('up') then
-        self.dy = -self.speed
+        self.vertical_speed = self.vertical_speed - 1
     elseif love.keyboard.isDown('s') or love.keyboard.isDown('down') then
-        self.dy = self.speed
+        self.vertical_speed = self.vertical_speed + 1
     elseif love.keyboard.isDown('a') or love.keyboard.isDown('left') then
-        self.dx = -self.speed
+        self.horizontal_speed = self.horizontal_speed - 1
     elseif love.keyboard.isDown('d') or love.keyboard.isDown('right') then
-        self.dx = self.speed
-    else
-        self.dx = 0
-        self.dy = 0
+        self.horizontal_speed = self.horizontal_speed + 1
     end
+
+    self.dy = self.vertical_speed
+    self.dx = self.horizontal_speed
 
     -- create hover in space effect
 
