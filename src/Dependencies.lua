@@ -1,0 +1,1 @@
+push = require 'lib/push'
