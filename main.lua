@@ -8,6 +8,9 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 512
 VIRTUAL_HEIGHT = 288
 
+-- loading background
+local background = love.graphics.newImage('graphics/background.png')
+
 function love.load()
     -- removing blur filter
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -44,7 +47,8 @@ end
 function love.draw()
     push:start()
 
-    -- TODO
+    -- render background
+    love.graphics.draw(background, 0, 0)
 
     push:finish()
 end
