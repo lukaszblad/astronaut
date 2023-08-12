@@ -8,8 +8,11 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 512
 VIRTUAL_HEIGHT = 288
 
--- loading background
-local background = love.graphics.newImage('graphics/background.png')
+-- initialize astronaut speed
+ASTRONAUT_SPEED = 200
+
+-- initializing astronaut
+astronaut = Astronaut()
 
 function love.load()
     -- removing blur filter
@@ -28,6 +31,12 @@ function love.load()
         resizable = true
     })
 
+    -- loading the sprites into a table
+    gSprites = {
+        ['background'] = love.graphics.newImage('graphics/background.png'),
+        ['astronaut'] = love.graphics.newImage('graphics/astronaut.png')
+    }
+
 end
 
 -- function to monitor pressed keys
@@ -41,14 +50,18 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
-    -- TODO
+    -- update astronaut
+    astronaut:update(dt)
 end
 
 function love.draw()
     push:start()
 
     -- render background
-    love.graphics.draw(background, 0, 0)
+    love.graphics.draw(gSprites['background'], 0, 0)
+
+    -- render astronaut
+    astronaut:render()
 
     push:finish()
 end
