@@ -13,40 +13,46 @@ function Astronaut:init()
     self.dx = 0
     self.dy = 0
 
-    self.vertical_speed = 0
-    self.horizontal_speed = 0
-
 end
 
 function Astronaut:update(dt)
 
     -- detect movement and update velocity
+    -- progressive velocity to simulate hover in space
     if love.keyboard.isDown('w') or love.keyboard.isDown('up') then
-        self.vertical_speed = self.vertical_speed - 1
+        self.dy = self.dy - 1
     elseif love.keyboard.isDown('s') or love.keyboard.isDown('down') then
-        self.vertical_speed = self.vertical_speed + 1
+        self.dy = self.dy + 1
     elseif love.keyboard.isDown('a') or love.keyboard.isDown('left') then
-        self.horizontal_speed = self.horizontal_speed - 1
+        self.dx = self.dx - 1
     elseif love.keyboard.isDown('d') or love.keyboard.isDown('right') then
-        self.horizontal_speed = self.horizontal_speed + 1
+        self.dx = self.dx + 1
     end
 
-    self.dy = self.vertical_speed
-    self.dx = self.horizontal_speed
-
-    -- create hover in space effect
-
-    -- update coordinates with bopundaries
+    -- update coordinates with boundaries
+    -- reset velocity if boundary hit
     if self.dx < 0 then
         self.x = math.max(0, self.x + self.dx * dt)
+        if self.x == 0 then
+            self.dx = 0
+        end
     else
         self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
+        if self.x == VIRTUAL_WIDTH - self.width then
+            self.dx = 0
+        end
     end
 
     if self.dy < 0 then
         self.y = math.max(0, self.y + self.dy * dt)
+        if self.y == 0 then
+            self.dy = 0
+        end
     else
         self.y = math.min(VIRTUAL_HEIGHT - self.height, self.y + self.dy * dt)
+        if self.y == VIRTUAL_HEIGHT - self.height then
+            self.dy = 0
+        end
     end
 
 end
