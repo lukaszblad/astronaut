@@ -3,9 +3,7 @@ StateMachine = Class{}
 function StateMachine:init(states)
     self.empty = {
 		render = function() end,
-		update = function() end,
-		enter = function() end,
-		exit = function() end
+		update = function() end
 	}
     self.states = states or {}
 	self.current = self.empty
@@ -13,7 +11,6 @@ end
 
 function StateMachine:change(stateName)
 	assert(self.states[stateName])
-	self.current:exit()
 	self.current = self.states[stateName]()
 end
 
