@@ -14,6 +14,10 @@ function Astronaut:init()
     self.dy = 0
 end
 
+function Astronaut:collides(meteorite)
+    --TODO
+end
+
 function Astronaut:update(dt)
     -- detect movement and update velocity
     -- progressive velocity to simulate hover in space

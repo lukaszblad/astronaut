@@ -5,6 +5,7 @@ function PlayState:init()
     self.meteorites = {[1] = Meteorite('meteorite5')}
 
     self.timer = 0
+    self.count = 0
 end
 
 function PlayState:update(dt)
@@ -18,6 +19,7 @@ function PlayState:update(dt)
 
         -- resetting timer
         self.timer = 0
+        self.count = self.count + 1
     end 
 
     -- updating meteorites
@@ -27,6 +29,15 @@ function PlayState:update(dt)
 
     -- updating astronaut
     self.astronaut:update(dt)
+
+    -- remove meteorites
+    for index, meteorite in pairs(self.meteorites) do
+        if meteorite.remove then
+            table.remove(self.meteorites, index)
+
+            self.count = self.count - 1
+        end
+    end
 end
 
 function PlayState:render()
