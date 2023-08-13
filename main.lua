@@ -4,6 +4,8 @@ require 'src/Dependencies'
 -- initializing astronaut
 astronaut = Astronaut()
 
+background = Background()
+
 function love.load()
     -- removing blur filter
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -24,7 +26,14 @@ function love.load()
     -- loading the sprites into a table
     gSprites = {
         ['background'] = love.graphics.newImage('graphics/background.png'),
-        ['astronaut'] = love.graphics.newImage('graphics/astronaut.png')
+        ['astronaut'] = love.graphics.newImage('graphics/astronaut.png'),
+
+        -- meteorites
+        ['meteorite2px'] = love.graphics.newImage('graphics/meteorite2px.png'),
+        ['meteorite3px'] = love.graphics.newImage('graphics/meteorite3px.png'),
+        ['meteorite5px'] = love.graphics.newImage('graphics/meteorite5px.png'),
+        ['meteorite10px'] = love.graphics.newImage('graphics/meteorite10px.png'),
+        ['meteorite25px'] = love.graphics.newImage('graphics/meteorite25px.png')
     }
 
 end
@@ -41,7 +50,9 @@ end
 
 function love.update(dt)
     -- update astronaut
-    astronaut:update(dt)
+    astronautX = astronaut:update(dt)
+    -- update background
+    background:update(dt, astronautX)
 end
 
 function love.draw()
@@ -49,6 +60,9 @@ function love.draw()
 
     -- render background
     love.graphics.draw(gSprites['background'], 0, 0)
+
+    -- render background
+    background:render()
 
     -- render astronaut
     astronaut:render()

@@ -55,6 +55,8 @@ function Astronaut:update(dt)
         end
     end
 
+    return self.x
+
 end
 
 function Astronaut:render()

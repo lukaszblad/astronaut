@@ -7,3 +7,4 @@ require 'src/constants'
 
 -- importing internal classes
 require 'src/Astronaut'
+require 'src/Background'
