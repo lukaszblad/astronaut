@@ -23,6 +23,13 @@ function love.load()
         resizable = true
     })
 
+    -- loading fonts
+    gFonts = {
+        ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
+        ['big'] = love.graphics.newFont('fonts/font.ttf', 32)
+    }
+    love.graphics.setFont(gFonts['small'])
+
     -- loading the sprites into a table
     gSprites = {
         ['background'] = love.graphics.newImage('graphics/background.png'),

@@ -11,6 +11,11 @@ function TitleState:update(dt)
 end
 
 function TitleState:render()
+    -- title text
+    love.graphics.setFont(gFonts['big'])
     love.graphics.printf('Astronaut', 0, 100, VIRTUAL_WIDTH, 'center')
+
+    -- press enter text
+    love.graphics.setFont(gFonts['small'])
     love.graphics.printf('Press space to play', 0, 150, VIRTUAL_WIDTH, 'center')
 end

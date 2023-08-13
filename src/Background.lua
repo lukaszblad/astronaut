@@ -14,9 +14,9 @@ function Background:update(dt)
     self.x = (self.x + self.dx * dt) % self.loopingPoint
 
     if love.keyboard.isDown('left') and self.dx > 0 then
-        self.dx = self.dx - 0.1
+        self.dx = self.dx - 0.15
     elseif love.keyboard.isDown('right') and self.dx < 16 then
-        self.dx = self.dx + 0.2
+        self.dx = self.dx + 0.18
     end 
 
     return self.dx

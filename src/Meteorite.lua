@@ -9,8 +9,8 @@ function Meteorite:init(str)
     self.x = VIRTUAL_WIDTH + 10
     self.y = math.random(-2, VIRTUAL_HEIGHT -2)
 
-    self.dx = math.random(5, 10)
-    self.dy = math.random (-5, 5)
+    self.dx = math.random(5, 15)
+    self.dy = math.random (-10, 10)
 end
 
 function Meteorite:update(dt, backgroundVelocity)
