@@ -29,43 +29,59 @@ function love.load()
         ['astronaut'] = love.graphics.newImage('graphics/astronaut.png'),
 
         -- meteorites
-        ['meteorite2px'] = love.graphics.newImage('graphics/meteorite2px.png'),
-        ['meteorite3px'] = love.graphics.newImage('graphics/meteorite3px.png'),
-        ['meteorite5px'] = love.graphics.newImage('graphics/meteorite5px.png'),
-        ['meteorite10px'] = love.graphics.newImage('graphics/meteorite10px.png'),
-        ['meteorite25px'] = love.graphics.newImage('graphics/meteorite25px.png')
+        ['meteorite1'] = love.graphics.newImage('graphics/meteorite5px.png'),
+        ['meteorite2'] = love.graphics.newImage('graphics/meteorite10px.png'),
+        ['meteorite3'] = love.graphics.newImage('graphics/meteorite15px.png'),
+        ['meteorite4'] = love.graphics.newImage('graphics/meteorite20px.png'),
+        ['meteorite5'] = love.graphics.newImage('graphics/meteorite25px.png')
     }
 
+    gStateMachine = StateMachine {
+        ['title'] = function() return TitleState() end,
+        ['play'] = function() return PlayState() end
+    }
+    gStateMachine:change('title')
+
+    -- initialize input table
+    love.keyboard.keysPressed = {}
 end
 
 -- function to monitor pressed keys
 function love.keypressed(key)
+    -- appending the pressed key
+    love.keyboard.keysPressed[key] = true
 
     -- quit app when escape pressed
     if key == 'escape' then
         love.event.quit()
     end
+end
 
+-- function to store pressed keys
+function love.keyboard.wasPressed(key)
+    if love.keyboard.keysPressed[key] then
+        return true
+    else
+        return false
+    end
 end
 
 function love.update(dt)
-    -- update astronaut
-    astronautX = astronaut:update(dt)
-    -- update background
-    background:update(dt, astronautX)
+    -- update current state
+    gStateMachine:update(dt)
+
+    -- clearing the pressed key table at each frame
+    love.keyboard.keysPressed = {}
 end
 
 function love.draw()
     push:start()
 
     -- render background
-    love.graphics.draw(gSprites['background'], 0, 0)
-
-    -- render background
     background:render()
 
-    -- render astronaut
-    astronaut:render()
+    -- render current state
+    gStateMachine:render()
 
     push:finish()
 end

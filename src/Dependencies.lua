@@ -1,10 +1,17 @@
--- importing external libraries
+-- import external libraries
 push = require 'lib/push'
 Class = require 'lib/class'
 
---importing local modules
+--import local modules
 require 'src/constants'
 
--- importing internal classes
+-- import internal classes
 require 'src/Astronaut'
 require 'src/Background'
+require 'src/Meteorite'
+
+-- import states
+require 'StateMachine'
+require 'src/states/BaseState'
+require 'src/states/PlayState'
+require 'src/states/TitleState'

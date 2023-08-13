@@ -6,15 +6,20 @@ function Background:init(x)
 
     self.width = 1536
     self.loopingPoint = 1023
-    self.dx = 15
-
+    self.dx = 0
 end
 
-function Background:update(dt, astronautX)
+function Background:update(dt)
     -- scroll if astronaut at 1/2 of width
-    if astronautX > VIRTUAL_WIDTH / 2 - 8 then
-        self.x = (self.x + self.dx * dt) % self.loopingPoint
-    end
+    self.x = (self.x + self.dx * dt) % self.loopingPoint
+
+    if love.keyboard.isDown('left') and self.dx > 0 then
+        self.dx = self.dx - 0.1
+    elseif love.keyboard.isDown('right') and self.dx < 16 then
+        self.dx = self.dx + 0.2
+    end 
+
+    return self.dx
 end
 
 function Background:render()

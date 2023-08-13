@@ -12,20 +12,18 @@ function Astronaut:init()
     -- starting velocity at zero
     self.dx = 0
     self.dy = 0
-
 end
 
 function Astronaut:update(dt)
-
     -- detect movement and update velocity
     -- progressive velocity to simulate hover in space
-    if love.keyboard.isDown('w') or love.keyboard.isDown('up') then
+    if love.keyboard.isDown('up') then
         self.dy = self.dy - 1
-    elseif love.keyboard.isDown('s') or love.keyboard.isDown('down') then
+    elseif love.keyboard.isDown('down') then
         self.dy = self.dy + 1
-    elseif love.keyboard.isDown('a') or love.keyboard.isDown('left') then
+    elseif love.keyboard.isDown('left') then
         self.dx = self.dx - 1
-    elseif love.keyboard.isDown('d') or love.keyboard.isDown('right') then
+    elseif love.keyboard.isDown('right') then
         self.dx = self.dx + 1
     end
 
@@ -54,9 +52,6 @@ function Astronaut:update(dt)
             self.dy = 0
         end
     end
-
-    return self.x
-
 end
 
 function Astronaut:render()
