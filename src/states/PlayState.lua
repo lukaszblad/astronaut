@@ -13,7 +13,7 @@ function PlayState:update(dt)
     backgroundDX, backgroundDY = background:update(dt)
     
     self.timer = self.timer + dt
-    if self.timer > 0.5 then
+    if self.timer > 0.1 then
         randomMeteorite = 'meteorite' .. tostring(math.random(5))
         table.insert(self.meteorites, Meteorite(randomMeteorite))
 

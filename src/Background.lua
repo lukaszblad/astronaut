@@ -17,13 +17,13 @@ function Background:update(dt)
     if love.keyboard.isDown('left') and self.dx > 0 then
         self.dx = self.dx - 0.15
     elseif love.keyboard.isDown('right') and self.dx < 16 then
-        self.dx = self.dx + 1
+        self.dx = self.dx + 0.15
     
     -- update Y scroll
     elseif love.keyboard.isDown('up') then
-        self.dy = self.dy + 0.15
+        self.dy = self.dy + 0.20
     elseif love.keyboard.isDown('down') then
-        self.dy = self.dy - 0.15
+        self.dy = self.dy - 0.20
     end
 
     -- scroll on axis X with looping
