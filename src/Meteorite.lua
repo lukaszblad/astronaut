@@ -21,7 +21,7 @@ function Meteorite:update(dt, backgroundDX, backgroundDY)
     self.y = self.y + self.dy * dt + backgroundDY / 10
 
     -- update remove flag
-    if (self.x + self.width < -50) or (self.y + self.height < -400) or (self.y > VIRTUAL_HEIGHT + 400) then
+    if (self.x + self.width < -10) or (self.y + self.height < -400) or (self.y > VIRTUAL_HEIGHT + 400) then
         self.remove = true
     end
 end

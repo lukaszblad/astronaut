@@ -21,9 +21,9 @@ function Background:update(dt)
     
     -- update Y scroll
     elseif love.keyboard.isDown('up') then
-        self.dy = self.dy + 0.20
+        self.dy = self.dy + 0.15
     elseif love.keyboard.isDown('down') then
-        self.dy = self.dy - 0.20
+        self.dy = self.dy - 0.15
     end
 
     -- scroll on axis X with looping

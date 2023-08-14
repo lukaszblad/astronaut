@@ -34,6 +34,7 @@ function love.load()
     gSprites = {
         ['background'] = love.graphics.newImage('graphics/background.png'),
         ['astronaut'] = love.graphics.newImage('graphics/astronaut.png'),
+        ['bar'] = love.graphics.newImage('graphics/bar.png'),
 
         -- meteorites
         ['meteorite1'] = love.graphics.newImage('graphics/meteorite5px.png'),
