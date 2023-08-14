@@ -10,10 +10,10 @@ end
 
 function PlayState:update(dt)
     -- update background
-    backgroundVelocity = background:update(dt, astronautX)
+    backgroundDX, backgroundDY = background:update(dt)
     
     self.timer = self.timer + dt
-    if self.timer > 0.4 then
+    if self.timer > 0.5 then
         randomMeteorite = 'meteorite' .. tostring(math.random(5))
         table.insert(self.meteorites, Meteorite(randomMeteorite))
 
@@ -24,7 +24,7 @@ function PlayState:update(dt)
 
     -- updating meteorites
     for index, meteorite in pairs(self.meteorites) do
-        meteorite:update(dt, backgroundVelocity)
+        meteorite:update(dt, backgroundDX, backgroundDY)
     end
 
     -- updating astronaut
