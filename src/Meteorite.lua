@@ -7,7 +7,7 @@ function Meteorite:init(str)
     self.height = self.sprite:getHeight()
 
     self.x = VIRTUAL_WIDTH + 10
-    self.y = math.random(-100, VIRTUAL_HEIGHT + 100)
+    self.y = math.random(-400, VIRTUAL_HEIGHT + 400)
 
     self.dx = math.random(5, 15)
     self.dy = math.random (-10, 10)

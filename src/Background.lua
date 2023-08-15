@@ -1,15 +1,19 @@
 Background = Class{}
 
-function Background:init(x)
+function Background:init()
     self.width = 1536
-    self.height = 576
+    self.height = 432
 
     self.x = 0
     self.y = -(self.height / 4) + 10
 
     self.loopingPointX = 1023
-    self.dx = 0
+    self.dx = 15
     self.dy = 0
+end
+
+function Background:scrolling(dt)
+    self.x = (self.x + self.dx * dt) % self.loopingPointX
 end
 
 function Background:update(dt)
@@ -39,13 +43,11 @@ function Background:update(dt)
 
     -- if going down
     elseif self.dy < 0 then
-        self.y = math.max(-288, self.y + self.dy * dt)
-        if self.y <= -288 then
+        self.y = math.max(-144, self.y + self.dy * dt)
+        if self.y <= -144 then
             self.dy = 0
         end
     end
-
-    -- self.y = self.y + self.dy * dt
 
     return self.dx, self.dy
 end
