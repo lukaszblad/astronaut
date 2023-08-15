@@ -14,7 +14,8 @@ end
 
 function PlayState:update(dt)
     -- update background
-    backgroundDX, backgroundDY = background:update(dt)
+        background:scrollX(dt)
+        background:scrollY(dt)
     
     -- spawn new meteorites
     self.meteoriteTimer = self.meteoriteTimer + dt
@@ -38,21 +39,22 @@ function PlayState:update(dt)
 
     -- update meteorites
     for index, meteorite in pairs(self.meteorites) do
-        meteorite:update(dt, backgroundDX, backgroundDY)
+        meteorite:update(dt, background.dx, background.dy)
         -- check for collision after timeout
         if self.immunityTimer <= 0 then
             -- if astronaut collides reset timeout
             if self.astronaut:collideMeteorite(meteorite) then
                 self.immunityTimer = 2
                 gSounds['damage']:play()
-                background.dx = background.dx - background.dx / 2
+                background.dx = - background.dx / 4
+                background.dy = - background.dy / 4
             end
         end
     end
 
     -- update powerups
     for index, powerup in pairs(self.powerups) do
-        powerup:update(dt, backgroundDX, backgroundDY)
+        powerup:update(dt, background.dx, background.dy)
         -- detect collision
         if self.astronaut:collidePowerUp(powerup) then
             if self.o2 >= 39 then
@@ -95,6 +97,7 @@ function PlayState:render()
         meteorite:render()
     end
 
+    -- render powerup
     for index, powerup in pairs(self.powerups) do
         powerup:render()
     end

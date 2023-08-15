@@ -12,28 +12,32 @@ function Background:init()
     self.dy = 0
 end
 
+-- scrolling for title state
 function Background:scrolling(dt)
     self.x = (self.x + self.dx * dt) % self.loopingPointX
 end
 
-function Background:update(dt)
+function Background:scrollX(dt)
     -- update X scroll
     if love.keyboard.isDown('left') and self.dx > 0 then
         self.dx = self.dx - 0.15
     elseif love.keyboard.isDown('right') and self.dx < 16 then
         self.dx = self.dx + 0.15
-    
+    end
+
+    -- scroll on axis X with looping
+    self.x = (self.x + self.dx * dt) % self.loopingPointX
+end
+
+function Background:scrollY(dt)
     -- update Y scroll
-    elseif love.keyboard.isDown('up') then
+    if love.keyboard.isDown('up') then
         self.dy = self.dy + 0.15
     elseif love.keyboard.isDown('down') then
         self.dy = self.dy - 0.15
     end
 
-    -- scroll on axis X with looping
-    self.x = (self.x + self.dx * dt) % self.loopingPointX
-    
-    --scroll on axis Y with boundaries
+    -- scroll on axis Y with boundaries
     -- if going up
     if self.dy > 0 then
         self.y = math.min(0, self.y + self.dy * dt)
@@ -50,8 +54,6 @@ function Background:update(dt)
             gSounds['boundary']:play()
         end
     end
-
-    return self.dx, self.dy
 end
 
 function Background:render()
