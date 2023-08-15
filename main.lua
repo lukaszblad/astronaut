@@ -46,12 +46,13 @@ function love.load()
         ['o2Bar'] = love.graphics.newImage('graphics/o2Bar.png'),
         ['o2'] = love.graphics.newImage('graphics/o2.png'),
         ['o2Refill'] = love.graphics.newImage('graphics/o2Refill.png'),
+        ['healthRefill'] = love.graphics.newImage('graphics/healthRefill.png'),
 
         -- meteorites
         ['meteorite1'] = love.graphics.newImage('graphics/meteorite5px.png'),
         ['meteorite2'] = love.graphics.newImage('graphics/meteorite10px.png'),
         ['meteorite3'] = love.graphics.newImage('graphics/meteorite15px.png'),
-        ['meteorite4'] = love.graphics.newImage('graphics/meteorite20px.png'),
+        ['meteorite4'] = love.graphics.newImage('graphics/meteorite20px.png'), 
         ['meteorite5'] = love.graphics.newImage('graphics/meteorite25px.png')
     }
 

@@ -1,7 +1,8 @@
 PowerUp = Class{}
 
-function PowerUp:init()
-    self.sprite = gSprites['o2Refill']
+function PowerUp:init(name)
+    self.sprite = gSprites[name]
+    self.type = name
 
     self.width = self.sprite:getWidth()
     self.height = self.sprite:getHeight()

@@ -3,11 +3,12 @@ PlayState = Class{__includes = BaseState}
 function PlayState:init()
     self.astronaut = Astronaut()
     self.meteorites = {[1] = Meteorite('meteorite5')}
-    self.powerups = {[1] = PowerUp('o2Refill.png')}
+    self.powerups = {[1] = PowerUp('o2Refill')}
 
     self.meteoriteTimer = 0
     self.immunityTimer = 0
     self.o2Timer = 0
+    self.healthTimer = 0
 
     self.o2 = 49
 end
@@ -30,11 +31,18 @@ function PlayState:update(dt)
         self.meteoriteTimer = 0
     end
 
-    -- spawn powerups
+    -- spawn oxygen
     self.o2Timer = self.o2Timer + dt
-    if self.o2Timer > 1 then
-        table.insert(self.powerups, PowerUp())
+    if self.o2Timer > 2 then
+        table.insert(self.powerups, PowerUp('o2Refill'))
         self.o2Timer = 0
+    end
+
+    -- spawn health
+    self.healthTimer = self.healthTimer + dt
+    if self.healthTimer > 2 then
+        table.insert(self.powerups, PowerUp('healthRefill'))
+        self.healthTimer = 0
     end
 
     -- update meteorites
@@ -57,13 +65,19 @@ function PlayState:update(dt)
         powerup:update(dt, background.dx, background.dy)
         -- detect collision
         if self.astronaut:collidePowerUp(powerup) then
-            if self.o2 >= 39 then
-                self.o2 = 49
-            else
-                self.o2 = self.o2 + 10
+            if powerup.type == 'o2Refill' then
+                if self.o2 >= 39 then
+                    self.o2 = 49
+                else
+                    self.o2 = self.o2 + 10
+                end
+                gSounds['powerup']:play()
+                table.remove(self.powerups, index)
+            elseif powerup.type == 'healthRefill' then
+                self.astronaut.health = self.astronaut.health + 1
+                gSounds['powerup']:play()
+                table.remove(self.powerups, index)
             end
-            gSounds['powerup']:play()
-            table.remove(self.powerups, index)
         end
     end
 
