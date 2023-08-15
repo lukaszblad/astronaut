@@ -17,6 +17,10 @@ function PlayState:update(dt)
     -- update background
         background:scrollX(dt)
         background:scrollY(dt)
+
+    if self.astronaut.health == 0 or self.o2 <= 0 then
+        gStateMachine:change('gameover')
+    end
     
     -- spawn new meteorites
     self.meteoriteTimer = self.meteoriteTimer + dt
@@ -124,6 +128,8 @@ function PlayState:render()
     -- render o2 bar
     love.graphics.draw(gSprites['o2'], VIRTUAL_WIDTH - 75, 10)
     love.graphics.draw(gSprites['o2Bar'], VIRTUAL_WIDTH - 60, 10)
+
+    love.graphics.setColor(61 / 255, 189 / 255, 222 / 255)
     love.graphics.rectangle('fill', VIRTUAL_WIDTH - 59, 11, self.o2, 8)
 
     -- rendering astronaut

@@ -19,7 +19,7 @@ function love.load()
     -- initialize virtual resolution
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,
-        fullscreen = false,
+        fullscreen = true,
         resizable = true
     })
 
@@ -49,7 +49,7 @@ function love.load()
         ['healthRefill'] = love.graphics.newImage('graphics/healthRefill.png'),
 
         -- meteorites
-        ['meteorite1'] = love.graphics.newImage('graphics/meteorite5px.png'),
+        ['meteorite1'] = love.graphics.newImage('graphics/meteorite7px.png'),
         ['meteorite2'] = love.graphics.newImage('graphics/meteorite10px.png'),
         ['meteorite3'] = love.graphics.newImage('graphics/meteorite15px.png'),
         ['meteorite4'] = love.graphics.newImage('graphics/meteorite20px.png'), 
@@ -58,7 +58,8 @@ function love.load()
 
     gStateMachine = StateMachine {
         ['title'] = function() return TitleState() end,
-        ['play'] = function() return PlayState() end
+        ['play'] = function() return PlayState() end,
+        ['gameover'] = function() return GameOverState() end
     }
     gStateMachine:change('title')
 
@@ -68,6 +69,10 @@ function love.load()
 
     -- initialize input table
     love.keyboard.keysPressed = {}
+end
+
+function love.resize(w, h)
+    push:resize(w, h)
 end
 
 -- function to monitor pressed keys
