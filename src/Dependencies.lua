@@ -9,6 +9,7 @@ require 'src/constants'
 require 'src/Astronaut'
 require 'src/Background'
 require 'src/Meteorite'
+require 'src/PowerUp'
 
 -- import states
 require 'StateMachine'

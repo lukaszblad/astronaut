@@ -23,6 +23,14 @@ function love.load()
         resizable = true
     })
 
+    -- loading sounds
+    gSounds = {
+        ['space'] = love.audio.newSource('sounds/space.mp3', 'static'),
+        ['damage'] = love.audio.newSource('sounds/damage.wav', 'static'),
+        ['boundary'] = love.audio.newSource('sounds/boundary.wav', 'static'),
+        ['powerup'] = love.audio.newSource('sounds/powerup.wav', 'static')
+    }
+
     -- loading fonts
     gFonts = {
         ['small'] = love.graphics.newFont('fonts/fontSmall.ttf', 12),
@@ -34,7 +42,10 @@ function love.load()
     gSprites = {
         ['background'] = love.graphics.newImage('graphics/background.png'),
         ['astronaut'] = love.graphics.newImage('graphics/astronaut.png'),
-        ['bar'] = love.graphics.newImage('graphics/bar.png'),
+        ['healthBar'] = love.graphics.newImage('graphics/healthBar.png'),
+        ['o2Bar'] = love.graphics.newImage('graphics/o2Bar.png'),
+        ['o2'] = love.graphics.newImage('graphics/o2.png'),
+        ['o2Refill'] = love.graphics.newImage('graphics/o2Refill.png'),
 
         -- meteorites
         ['meteorite1'] = love.graphics.newImage('graphics/meteorite5px.png'),
@@ -49,6 +60,10 @@ function love.load()
         ['play'] = function() return PlayState() end
     }
     gStateMachine:change('title')
+
+    -- playiing space sounds in loop
+    gSounds['space']:play()
+    gSounds['space']:setLooping(true)
 
     -- initialize input table
     love.keyboard.keysPressed = {}

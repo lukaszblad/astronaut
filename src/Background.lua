@@ -38,14 +38,16 @@ function Background:update(dt)
     if self.dy > 0 then
         self.y = math.min(0, self.y + self.dy * dt)
         if self.y >= 0 then
-            self.dy = 0
+            self.dy = -self.dy / 4
+            gSounds['boundary']:play()
         end
 
     -- if going down
     elseif self.dy < 0 then
         self.y = math.max(-144, self.y + self.dy * dt)
         if self.y <= -144 then
-            self.dy = 0
+            self.dy = -self.dy / 4
+            gSounds['boundary']:play()
         end
     end
 
