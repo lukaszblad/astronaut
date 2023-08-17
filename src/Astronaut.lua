@@ -17,49 +17,26 @@ function Astronaut:init()
     self.o2 = 49
 
     self.opacity = 255 / 255
-
-    self.tolerance = 1
 end
 
 function Astronaut:collideMeteorite(meteorite)
-    -- detecti if one of the four edges of astronaut is inside the hitbox of a meteorite
-    -- upper left corner
-    if self.x > meteorite.x + self.tolerance and self.y < meteorite.y + meteorite.height - self.tolerance and self.x < meteorite.x + meteorite.width - self.tolerance and self.y > meteorite.y + self.tolerance then
-        return true
-
-    -- bottome right corner
-    elseif self.x + self.width > meteorite.x + self.tolerance and self.y + self.height < meteorite.y + meteorite.height - self.tolerance and self.x + self.width < meteorite.x + meteorite. width - self.tolerance and self.y + self.height > meteorite.y + self.tolerance then
-        return true
-
-    -- upper right corner
-    elseif self.x + self.width > meteorite.x + self.tolerance and self.y > meteorite.y + self.tolerance and self.x + self.width < meteorite.x + meteorite.width - self.tolerance and self.y < meteorite.y + meteorite.height - self.tolerance then
-        return true
-
-    -- bottom left corner
-    elseif self.x > meteorite.x + self.tolerance and self.y + self.height > meteorite.y + self.tolerance and self.x < meteorite.x + meteorite.width - self.tolerance and self.y + self.height < meteorite.y + meteorite.height - self.tolerance then
-        return true
+    -- detecti if one of the four sides of the astronaut is inside the hitbox of a meteorite
+    -- upper side
+    if (self.x + 2) + (self.width - 4) >= meteorite.x and self.x + 2 <= meteorite.x + meteorite.width then
+        if (self.y + 2) + (self.height - 4) >= meteorite.y and self.y + 2 <= meteorite.y + meteorite.height then
+            return true
+        end
     end
 
     return false
 end
 
 function Astronaut:collidePowerUp(powerup)
-    -- detecti if one of the four edges of astronaut is inside the hitbox of a powerup
-    -- upper left corner
-    if self.x > powerup.x and self.y < powerup.y + powerup.height and self.x < powerup.x + powerup.width and self.y > powerup.y then
-        return true
-
-    -- bottome right corner
-    elseif self.x + self.width > powerup.x and self.y + self.height < powerup.y + powerup.height and self.x + self.width < powerup.x + powerup. width and self.y + self.height > powerup.y then
-        return true
-
-    -- upper right corner
-    elseif self.x + self.width > powerup.x and self.y > powerup.y and self.x + self.width < powerup.x + powerup.width and self.y < powerup.y + powerup.height then
-        return true
-
-    -- bottom left corner
-    elseif self.x > powerup.x and self.y + self.height > powerup.y and self.x < powerup.x + powerup.width and self.y + self.height < powerup.y + powerup.height then
-        return true
+    -- detecti if one of the four sides of the astronaut is inside the hitbox of a powerup
+    if (self.x + 2) + (self.width - 4) >= powerup.x and self.x + 2 <= powerup.x + powerup.width then
+        if (self.y + 2) + (self.height - 4) >= powerup.y and self.y + 2 <= powerup.y + powerup.height then
+            return true
+        end
     end
 
     return false
