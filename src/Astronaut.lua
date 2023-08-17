@@ -14,6 +14,8 @@ function Astronaut:init()
     self.dy = 0
 
     self.health = 3
+    self.o2 = 49
+
     self.opacity = 255 / 255
 
     self.tolerance = 1

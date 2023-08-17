@@ -7,10 +7,9 @@ function PlayState:init()
 
     self.meteoriteTimer = 0
     self.immunityTimer = 0
-    self.o2Timer = 0
+    self.o2SpawnTimer = 0
+    self.o2HealthTimer = 0
     self.healthTimer = 0
-
-    self.o2 = 49
 end
 
 function PlayState:update(dt)
@@ -18,33 +17,34 @@ function PlayState:update(dt)
         background:scrollX(dt)
         background:scrollY(dt)
 
-    if self.astronaut.health == 0 or self.o2 <= 0 then
+    if self.astronaut.health == 0 then
         gStateMachine:change('gameover')
     end
     
     -- spawn new meteorites
     self.meteoriteTimer = self.meteoriteTimer + dt
     if self.meteoriteTimer > 0.1 then
-        randomMeteorite = 'meteorite' .. tostring(math.random(5))
+        randomMeteorite = 'meteorite' .. tostring(math.random(11))
         table.insert(self.meteorites, Meteorite(randomMeteorite))
 
         -- reducing o2 level
-        self.o2 = self.o2 - 0.1
-
+        if self.astronaut.o2 > 0 then
+            self.astronaut.o2 = self.astronaut.o2 - 0.1
+        end
         -- resetting timer
         self.meteoriteTimer = 0
     end
 
     -- spawn oxygen
-    self.o2Timer = self.o2Timer + dt
-    if self.o2Timer > 2 then
+    self.o2SpawnTimer = self.o2SpawnTimer + dt
+    if self.o2SpawnTimer > 3 then
         table.insert(self.powerups, PowerUp('o2Refill'))
-        self.o2Timer = 0
+        self.o2SpawnTimer = 0
     end
 
     -- spawn health
     self.healthTimer = self.healthTimer + dt
-    if self.healthTimer > 2 then
+    if self.healthTimer > 5 then
         table.insert(self.powerups, PowerUp('healthRefill'))
         self.healthTimer = 0
     end
@@ -70,10 +70,10 @@ function PlayState:update(dt)
         -- detect collision
         if self.astronaut:collidePowerUp(powerup) then
             if powerup.type == 'o2Refill' then
-                if self.o2 >= 39 then
-                    self.o2 = 49
+                if self.astronaut.o2 >= 39 then
+                    self.astronaut.o2 = 49
                 else
-                    self.o2 = self.o2 + 10
+                    self.astronaut.o2 = self.astronaut.o2 + 10
                 end
                 gSounds['powerup']:play()
                 table.remove(self.powerups, index)
@@ -82,6 +82,17 @@ function PlayState:update(dt)
                 gSounds['powerup']:play()
                 table.remove(self.powerups, index)
             end
+        end
+    end
+
+    -- update health when out of oxygen
+    if self.astronaut.o2 <= 0 then
+        gSounds['alarm']:play()
+        self.o2HealthTimer = self.o2HealthTimer + dt
+        if self.o2HealthTimer > 5 then
+            self.astronaut.health = self.astronaut.health - 1
+            gSounds['damage']:play()
+            self.o2HealthTimer = 0
         end
     end
 
@@ -101,7 +112,7 @@ function PlayState:update(dt)
         end
     end
 
-    -- remove o2
+    -- remove powerup
     for index, powerup in pairs(self.powerups) do
         if powerup.remove then
             table.remove(self.powerups, index)
@@ -130,7 +141,7 @@ function PlayState:render()
     love.graphics.draw(gSprites['o2Bar'], VIRTUAL_WIDTH - 60, 10)
 
     love.graphics.setColor(61 / 255, 189 / 255, 222 / 255)
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH - 59, 11, self.o2, 8)
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH - 59, 11, self.astronaut.o2, 8)
 
     -- rendering astronaut
     self.astronaut:render()

@@ -28,8 +28,17 @@ function love.load()
         ['space'] = love.audio.newSource('sounds/space.mp3', 'static'),
         ['damage'] = love.audio.newSource('sounds/damage.wav', 'static'),
         ['boundary'] = love.audio.newSource('sounds/boundary.wav', 'static'),
-        ['powerup'] = love.audio.newSource('sounds/powerup.wav', 'static')
+        ['powerup'] = love.audio.newSource('sounds/powerup.wav', 'static'),
+        ['alarm'] = love.audio.newSource('sounds/alarm.wav', 'static')
     }
+
+    -- volume settings
+    gSounds['alarm']:setVolume(0.1)
+    gSounds['space']:setVolume(0.1)
+
+    -- playiing space sounds in loop
+    gSounds['space']:play()
+    gSounds['space']:setLooping(true)
 
     -- loading fonts
     gFonts = {
@@ -49,11 +58,17 @@ function love.load()
         ['healthRefill'] = love.graphics.newImage('graphics/healthRefill.png'),
 
         -- meteorites
-        ['meteorite1'] = love.graphics.newImage('graphics/meteorite7px.png'),
-        ['meteorite2'] = love.graphics.newImage('graphics/meteorite10px.png'),
-        ['meteorite3'] = love.graphics.newImage('graphics/meteorite15px.png'),
-        ['meteorite4'] = love.graphics.newImage('graphics/meteorite20px.png'), 
-        ['meteorite5'] = love.graphics.newImage('graphics/meteorite25px.png')
+        ['meteorite1'] = love.graphics.newImage('graphics/meteorite1.png'),
+        ['meteorite2'] = love.graphics.newImage('graphics/meteorite2.png'),
+        ['meteorite3'] = love.graphics.newImage('graphics/meteorite3.png'),
+        ['meteorite4'] = love.graphics.newImage('graphics/meteorite4.png'), 
+        ['meteorite5'] = love.graphics.newImage('graphics/meteorite5.png'),
+        ['meteorite6'] = love.graphics.newImage('graphics/meteorite6.png'),
+        ['meteorite7'] = love.graphics.newImage('graphics/meteorite7.png'),
+        ['meteorite8'] = love.graphics.newImage('graphics/meteorite8.png'),
+        ['meteorite9'] = love.graphics.newImage('graphics/meteorite9.png'),
+        ['meteorite10'] = love.graphics.newImage('graphics/meteorite10.png'),
+        ['meteorite11'] = love.graphics.newImage('graphics/meteorite11.png')
     }
 
     gStateMachine = StateMachine {
@@ -62,10 +77,6 @@ function love.load()
         ['gameover'] = function() return GameOverState() end
     }
     gStateMachine:change('title')
-
-    -- playiing space sounds in loop
-    gSounds['space']:play()
-    gSounds['space']:setLooping(true)
 
     -- initialize input table
     love.keyboard.keysPressed = {}

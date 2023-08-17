@@ -32,9 +32,9 @@ end
 
 function Background:scrollY(dt)
     -- update Y scroll
-    if love.keyboard.isDown('up') and self.dy < 15 then
+    if love.keyboard.isDown('up') and self.dy < 10 then
         self.dy = self.dy + 0.15
-    elseif love.keyboard.isDown('down') and self.dy > -15 then
+    elseif love.keyboard.isDown('down') and self.dy > -10 then
         self.dy = self.dy - 0.15
     end
 
