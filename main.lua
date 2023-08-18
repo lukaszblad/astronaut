@@ -31,8 +31,7 @@ function love.load()
         ['powerup'] = love.audio.newSource('sounds/powerup.wav', 'static'),
         ['alarm'] = love.audio.newSource('sounds/alarm.wav', 'static'),
         ['shipDamage'] = love.audio.newSource('sounds/shipDamage.wav', 'static'),
-        ['mineral'] = love.audio.newSource('sounds/mineral.wav', 'static'),
-        ['doors'] = love.audio.newSource('sounds/doors.wav', 'static')
+        ['mineral'] = love.audio.newSource('sounds/mineral.wav', 'static')
     }
 
     -- volume settings
