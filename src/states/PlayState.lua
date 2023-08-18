@@ -97,7 +97,7 @@ function PlayState:update(dt)
                 table.remove(self.powerups, index)
             elseif powerup.type == 'mineral' then
                 self.collectedMinerals = self.collectedMinerals + 1
-                gSounds['mineral']:play()
+                gSounds['plutonium']:play()
                 table.remove(self.powerups, index)
             end
         end

@@ -27,18 +27,16 @@ function love.load()
     gSounds = {
         ['space'] = love.audio.newSource('sounds/space.wav', 'static'),
         ['damage'] = love.audio.newSource('sounds/damage.wav', 'static'),
-        ['boundary'] = love.audio.newSource('sounds/boundary.wav', 'static'),
         ['powerup'] = love.audio.newSource('sounds/powerup.wav', 'static'),
         ['alarm'] = love.audio.newSource('sounds/alarm.wav', 'static'),
-        ['shipDamage'] = love.audio.newSource('sounds/shipDamage.wav', 'static'),
-        ['mineral'] = love.audio.newSource('sounds/mineral.wav', 'static')
+        ['plutonium'] = love.audio.newSource('sounds/plutonium.wav', 'static')
     }
 
     -- volume settings
     gSounds['alarm']:setVolume(0.1)
     gSounds['space']:setVolume(0.5)
     gSounds['powerup']:setVolume(0.1)
-    gSounds['mineral']:setVolume(0.1)
+    gSounds['plutonium']:setVolume(0.1)
 
     -- playiing space sounds in loop
     gSounds['space']:play()
