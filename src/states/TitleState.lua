@@ -7,7 +7,7 @@ end
 
 function TitleState:update(dt)
     if love.keyboard.wasPressed('space') then
-        gStateMachine:change('play')
+        gStateMachine:change('intro')
     end
 
     if self.opacity <= 50 / 255 then
@@ -18,7 +18,7 @@ function TitleState:update(dt)
 
     self.opacity = self.opacity + self.blink
 
-    background:scrolling(dt)
+    background:scrollX(dt)
 end
 
 function TitleState:render()

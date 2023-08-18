@@ -9,7 +9,7 @@ function Meteorite:init(str)
     self.x = VIRTUAL_WIDTH + 10
     self.y = math.random(-500, VIRTUAL_HEIGHT + 500)
 
-    self.dx = math.random(5, 15)
+    self.dx = math.random(5, 30)
     self.dy = math.random (-10, 10)
 
     -- flag to indicate meteorites to be removed

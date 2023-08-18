@@ -1,8 +1,8 @@
 Astronaut = Class{}
 
-function Astronaut:init()
+function Astronaut:init(x)
     -- initial position centered
-    self.x = VIRTUAL_WIDTH / 2 - 8
+    self.x = x
     self.y = VIRTUAL_HEIGHT / 2 - 10
 
     --sprite dimensions
@@ -10,13 +10,16 @@ function Astronaut:init()
     self.height = 20
 
     -- starting velocity at zero
-    self.dx = 0
+    self.dx = 50
     self.dy = 0
 
     self.health = 3
     self.o2 = 49
 
-    self.opacity = 255 / 255
+    self.red = 255 / 255
+    self.green = 255 / 255
+    self.blue = 255 / 255
+    self.alpha = 255 / 255
 end
 
 function Astronaut:collideMeteorite(meteorite)
@@ -33,8 +36,8 @@ end
 
 function Astronaut:collidePowerUp(powerup)
     -- detecti if one of the four sides of the astronaut is inside the hitbox of a powerup
-    if (self.x + 2) + (self.width - 4) >= powerup.x and self.x + 2 <= powerup.x + powerup.width then
-        if (self.y + 2) + (self.height - 4) >= powerup.y and self.y + 2 <= powerup.y + powerup.height then
+    if self.x + self.width >= powerup.x and self.x <= powerup.x + powerup.width then
+        if self.y + self.height >= powerup.y and self.y <= powerup.y + powerup.height then
             return true
         end
     end
@@ -42,16 +45,24 @@ function Astronaut:collidePowerUp(powerup)
     return false
 end
 
+function Astronaut:scroll(dt)
+    self.x = self.x + self.dx * dt
+end
+
 function Astronaut:update(dt, immunityTimer)
     if immunityTimer == 2 then
-        self.opacity = 50 / 255
+        self.alpha = 50 / 255
+        self.green = 0 / 255
+        self.blue = 0 / 255
         self.health = self.health - 1
     elseif immunityTimer <= 0 then
-        self.opacity = 255 / 255
+        self.alpha = 255 / 255
+        self.green = 255 / 255
+        self.blue = 255 / 255
     end
 end
 
 function Astronaut:render()
-    love.graphics.setColor(255 / 255, 255 / 255, 255 / 255, self.opacity)
+    love.graphics.setColor(self.red, self.green, self.blue, self.alpha)
     love.graphics.draw(gSprites['astronaut'], self.x, self.y)
 end

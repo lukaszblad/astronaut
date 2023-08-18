@@ -25,16 +25,21 @@ function love.load()
 
     -- loading sounds
     gSounds = {
-        ['space'] = love.audio.newSource('sounds/space.mp3', 'static'),
+        ['space'] = love.audio.newSource('sounds/space.wav', 'static'),
         ['damage'] = love.audio.newSource('sounds/damage.wav', 'static'),
         ['boundary'] = love.audio.newSource('sounds/boundary.wav', 'static'),
         ['powerup'] = love.audio.newSource('sounds/powerup.wav', 'static'),
-        ['alarm'] = love.audio.newSource('sounds/alarm.wav', 'static')
+        ['alarm'] = love.audio.newSource('sounds/alarm.wav', 'static'),
+        ['shipDamage'] = love.audio.newSource('sounds/shipDamage.wav', 'static'),
+        ['mineral'] = love.audio.newSource('sounds/mineral.wav', 'static'),
+        ['doors'] = love.audio.newSource('sounds/doors.wav', 'static')
     }
 
     -- volume settings
     gSounds['alarm']:setVolume(0.1)
-    gSounds['space']:setVolume(0.1)
+    gSounds['space']:setVolume(0.5)
+    gSounds['powerup']:setVolume(0.1)
+    gSounds['mineral']:setVolume(0.1)
 
     -- playiing space sounds in loop
     gSounds['space']:play()
@@ -56,6 +61,17 @@ function love.load()
         ['o2'] = love.graphics.newImage('graphics/o2.png'),
         ['o2Refill'] = love.graphics.newImage('graphics/o2Refill.png'),
         ['healthRefill'] = love.graphics.newImage('graphics/healthRefill.png'),
+        ['spaceship'] = love.graphics.newImage('graphics/spaceship.png'),
+        ['mineral'] = love.graphics.newImage('graphics/mineral.png'),
+        ['mineralBar'] = love.graphics.newImage('graphics/mineralBar.png'),
+
+        -- fire animation
+        ['fire1'] = love.graphics.newImage('graphics/fire1.png'),
+        ['fire2'] = love.graphics.newImage('graphics/fire1.png'),
+        ['fire3'] = love.graphics.newImage('graphics/fire2.png'),
+        ['fire4'] = love.graphics.newImage('graphics/fire2.png'),
+        ['fire5'] = love.graphics.newImage('graphics/fire3.png'),
+        ['fire6'] = love.graphics.newImage('graphics/fire3.png'),
 
         -- meteorites
         ['meteorite1'] = love.graphics.newImage('graphics/meteorite1.png'),
@@ -74,7 +90,9 @@ function love.load()
     gStateMachine = StateMachine {
         ['title'] = function() return TitleState() end,
         ['play'] = function() return PlayState() end,
-        ['gameover'] = function() return GameOverState() end
+        ['gameover'] = function() return GameOverState() end,
+        ['intro'] = function() return IntroState() end,
+        ['outro'] = function() return OutroState() end
     }
     gStateMachine:change('title')
 

@@ -1,7 +1,7 @@
 PlayState = Class{__includes = BaseState}
 
 function PlayState:init()
-    self.astronaut = Astronaut()
+    self.astronaut = Astronaut(VIRTUAL_WIDTH / 2 - 8)
     self.meteorites = {[1] = Meteorite('meteorite5')}
     self.powerups = {[1] = PowerUp('o2Refill')}
 
@@ -10,12 +10,19 @@ function PlayState:init()
     self.o2SpawnTimer = 0
     self.o2HealthTimer = 0
     self.healthTimer = 0
+    self.mineralTimer = 0
+
+    self.collectedMinerals = 0
 end
 
 function PlayState:update(dt)
     -- update background
         background:scrollX(dt)
         background:scrollY(dt)
+
+    if self.collectedMinerals == 12 then
+        gStateMachine:change('outro')
+    end
 
     if self.astronaut.health == 0 then
         gStateMachine:change('gameover')
@@ -44,9 +51,16 @@ function PlayState:update(dt)
 
     -- spawn health
     self.healthTimer = self.healthTimer + dt
-    if self.healthTimer > 5 then
+    if self.healthTimer > 7 and self.astronaut.health < 5 then
         table.insert(self.powerups, PowerUp('healthRefill'))
         self.healthTimer = 0
+    end
+
+    -- spawn new mineral
+    self.mineralTimer = self.mineralTimer + dt
+    if self.mineralTimer > 1 then
+        table.insert(self.powerups, PowerUp('mineral'))
+        self.mineralTimer = 0
     end
 
     -- update meteorites
@@ -81,24 +95,36 @@ function PlayState:update(dt)
                 self.astronaut.health = self.astronaut.health + 1
                 gSounds['powerup']:play()
                 table.remove(self.powerups, index)
+            elseif powerup.type == 'mineral' then
+                self.collectedMinerals = self.collectedMinerals + 1
+                gSounds['mineral']:play()
+                table.remove(self.powerups, index)
             end
-        end
-    end
-
-    -- update health when out of oxygen
-    if self.astronaut.o2 <= 0 then
-        gSounds['alarm']:play()
-        self.o2HealthTimer = self.o2HealthTimer + dt
-        if self.o2HealthTimer > 5 then
-            self.astronaut.health = self.astronaut.health - 1
-            gSounds['damage']:play()
-            self.o2HealthTimer = 0
         end
     end
 
     -- updating astronaut after hit or after timeout
     if self.immunityTimer == 2 or self.immunityTimer <= 0 then
         self.astronaut:update(dt, self.immunityTimer)
+    end
+
+    -- when oxygen terminated
+    if self.astronaut.o2 <= 0 then
+        -- self.astronaut.green = 255 / 255
+        -- self.astronaut.blue = 255 / 255
+        gSounds['alarm']:play()
+        self.o2HealthTimer = self.o2HealthTimer + dt
+
+        -- damage taken after 5 seconds
+        if self.o2HealthTimer > 5 then
+            self.astronaut.health = self.astronaut.health - 1
+            gSounds['damage']:play()
+
+            -- change the astronaut to red color for 1 frame
+            self.astronaut.green = 0 / 255
+            self.astronaut.blue = 0 / 255
+            self.o2HealthTimer = 0
+        end
     end
 
     -- immunity timer decrese
@@ -139,9 +165,13 @@ function PlayState:render()
     -- render o2 bar
     love.graphics.draw(gSprites['o2'], VIRTUAL_WIDTH - 75, 10)
     love.graphics.draw(gSprites['o2Bar'], VIRTUAL_WIDTH - 60, 10)
+    love.graphics.draw(gSprites['mineralBar'], VIRTUAL_WIDTH /2 - 25, 10)
 
     love.graphics.setColor(61 / 255, 189 / 255, 222 / 255)
     love.graphics.rectangle('fill', VIRTUAL_WIDTH - 59, 11, self.astronaut.o2, 8)
+
+    love.graphics.setColor(106 / 255, 190 / 255, 48 / 255, 255 / 255)
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 24, 11, self.collectedMinerals * 4, 8)
 
     -- rendering astronaut
     self.astronaut:render()
