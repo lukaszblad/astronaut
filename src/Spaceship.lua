@@ -18,7 +18,7 @@ function Spaceship:scroll(dt)
 end
 
 function Spaceship:broken(dt)
-    self.dx = self.dx - 0.08
+    self.dx = math.max(0.5, self.dx - 0.08)
     self.x = self.x + self.dx * dt
 end
 
