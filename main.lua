@@ -95,6 +95,10 @@ function love.load()
 
     -- initialize input table
     love.keyboard.keysPressed = {}
+
+    -- fps cap
+    min_dt = 1/60 --fps
+    next_time = love.timer.getTime()
 end
 
 function love.resize(w, h)
@@ -122,6 +126,9 @@ function love.keyboard.wasPressed(key)
 end
 
 function love.update(dt)
+    -- fps cap
+    next_time = next_time + min_dt
+
     -- update current state
     gStateMachine:update(dt)
 
@@ -139,4 +146,11 @@ function love.draw()
     gStateMachine:render()
 
     push:finish()
+
+    local cur_time = love.timer.getTime()
+    if next_time <= cur_time then
+       next_time = cur_time
+       return
+    end
+    love.timer.sleep(next_time - cur_time)
 end
