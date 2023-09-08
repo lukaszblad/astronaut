@@ -64,11 +64,8 @@ function love.load()
 
         -- fire animation
         ['fire1'] = love.graphics.newImage('graphics/fire1.png'),
-        ['fire2'] = love.graphics.newImage('graphics/fire1.png'),
-        ['fire3'] = love.graphics.newImage('graphics/fire2.png'),
-        ['fire4'] = love.graphics.newImage('graphics/fire2.png'),
-        ['fire5'] = love.graphics.newImage('graphics/fire3.png'),
-        ['fire6'] = love.graphics.newImage('graphics/fire3.png'),
+        ['fire2'] = love.graphics.newImage('graphics/fire2.png'),
+        ['fire3'] = love.graphics.newImage('graphics/fire3.png'),
 
         -- meteorites
         ['meteorite1'] = love.graphics.newImage('graphics/meteorite1.png'),

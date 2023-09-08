@@ -5,19 +5,22 @@ function Fire:init(x, alpha)
     self.y = VIRTUAL_HEIGHT / 2 - 11
 
     self.dx = 0
-    self.count = 1
     self.frame = 'fire1'
+    self.frameCount = 1
     self.alpha = alpha / 255
+
+    Timer.every(0.1, function()
+        if self.frameCount == 3 then
+            self.frameCount = 0
+        end
+        self.frameCount = self.frameCount + 1
+    end)
 end
 
 function Fire:update(dt, dx)
-    self.count = self.count + 1
+    Timer.update(dt)
+    self.frame = 'fire' .. tostring(self.frameCount)
 
-    self.frame = 'fire' .. tostring(self.count)
-
-    if self.count == 6 then
-        self.count = 0
-    end
     self.dx = dx
     self.x = self.x + self.dx * dt
 end
