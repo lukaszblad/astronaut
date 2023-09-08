@@ -51,7 +51,6 @@ end
 
 function Astronaut:update(dt, immunityTimer)
     if immunityTimer == 2 then
-        self.alpha = 50 / 255
         self.green = 0 / 255
         self.blue = 0 / 255
         self.health = self.health - 1

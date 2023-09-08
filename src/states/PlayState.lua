@@ -5,12 +5,14 @@ function PlayState:init()
     self.meteorites = {[1] = Meteorite('meteorite5')}
     self.powerups = {[1] = PowerUp('o2Refill')}
 
-    self.meteoriteTimer = 0
+    -- timer based features
+    Timer.every(0.1, function() randomMeteorite = 'meteorite' .. tostring(math.random(11)) table.insert(self.meteorites, Meteorite(randomMeteorite)) end)
+    Timer.every(0.15, function() self.astronaut.o2 = math.max(0, self.astronaut.o2 - 0.1) end)
+    Timer.every(5, function() table.insert(self.powerups, PowerUp('mineral')) end)
+    Timer.every(3, function() table.insert(self.powerups, PowerUp('o2Refill')) end)
+    Timer.every(7, function() table.insert(self.powerups, PowerUp('healthRefill')) end)
     self.immunityTimer = 0
-    self.o2SpawnTimer = 0
     self.o2HealthTimer = 0
-    self.healthTimer = 0
-    self.mineralTimer = 0
 
     self.collectedMinerals = 0
 end
@@ -20,47 +22,17 @@ function PlayState:update(dt)
         background:scrollX(dt)
         background:scrollY(dt)
 
+    -- call timer functions
+    Timer.update(dt)
+
+    -- plutonium goal
     if self.collectedMinerals == 12 then
         gStateMachine:change('outro')
     end
 
+    -- game over for health
     if self.astronaut.health == 0 then
         gStateMachine:change('gameover')
-    end
-    
-    -- spawn new meteorites
-    self.meteoriteTimer = self.meteoriteTimer + dt
-    if self.meteoriteTimer > 0.1 then
-        randomMeteorite = 'meteorite' .. tostring(math.random(11))
-        table.insert(self.meteorites, Meteorite(randomMeteorite))
-
-        -- reducing o2 level
-        if self.astronaut.o2 > 0 then
-            self.astronaut.o2 = self.astronaut.o2 - 0.1
-        end
-        -- resetting timer
-        self.meteoriteTimer = 0
-    end
-
-    -- spawn oxygen
-    self.o2SpawnTimer = self.o2SpawnTimer + dt
-    if self.o2SpawnTimer > 3 then
-        table.insert(self.powerups, PowerUp('o2Refill'))
-        self.o2SpawnTimer = 0
-    end
-
-    -- spawn health
-    self.healthTimer = self.healthTimer + dt
-    if self.healthTimer > 7 and self.astronaut.health < 5 then
-        table.insert(self.powerups, PowerUp('healthRefill'))
-        self.healthTimer = 0
-    end
-
-    -- spawn new mineral
-    self.mineralTimer = self.mineralTimer + dt
-    if self.mineralTimer > 1 then
-        table.insert(self.powerups, PowerUp('mineral'))
-        self.mineralTimer = 0
     end
 
     -- update meteorites
@@ -81,7 +53,7 @@ function PlayState:update(dt)
     -- update powerups
     for index, powerup in pairs(self.powerups) do
         powerup:update(dt, background.dx, background.dy)
-        -- detect collision
+        -- detect collisions
         if self.astronaut:collidePowerUp(powerup) then
             if powerup.type == 'o2Refill' then
                 if self.astronaut.o2 >= 39 then
@@ -106,12 +78,16 @@ function PlayState:update(dt)
     -- updating astronaut after hit or after timeout
     if self.immunityTimer == 2 or self.immunityTimer <= 0 then
         self.astronaut:update(dt, self.immunityTimer)
+    elseif self.immunityTimer < 2 and self.immunityTimer > 0 and self.astronaut.blue < 255 / 255 then
+        self.astronaut.alpha = 55 / 255
+        self.astronaut.blue = 255 / 255
+        self.astronaut.green = 255 / 255
     end
 
     -- when oxygen terminated
     if self.astronaut.o2 <= 0 then
-        -- self.astronaut.green = 255 / 255
-        -- self.astronaut.blue = 255 / 255
+        self.astronaut.green = 255 / 255
+        self.astronaut.blue = 255 / 255
         gSounds['alarm']:play()
         self.o2HealthTimer = self.o2HealthTimer + dt
 
@@ -131,6 +107,7 @@ function PlayState:update(dt)
     if self.immunityTimer > 0 then
         self.immunityTimer = self.immunityTimer - dt
     end
+
     -- remove meteorites
     for index, meteorite in pairs(self.meteorites) do
         if meteorite.remove then
