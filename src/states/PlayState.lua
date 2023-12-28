@@ -6,9 +6,13 @@ function PlayState:init()
     self.powerups = {[1] = PowerUp('o2Refill')}
 
     -- timer based features
-    Timer.every(0.1, function() randomMeteorite = 'meteorite' .. tostring(math.random(11)) table.insert(self.meteorites, Meteorite(randomMeteorite)) end)
+    Timer.every(0.1, function()
+        if #self.meteorites < 50 then
+            randomMeteorite = 'meteorite' .. tostring(math.random(11)) table.insert(self.meteorites, Meteorite(randomMeteorite))
+        end
+    end)
     Timer.every(0.15, function() self.astronaut.o2 = math.max(0, self.astronaut.o2 - 0.1) end)
-    Timer.every(5, function() table.insert(self.powerups, PowerUp('mineral')) end)
+    Timer.every(1, function() table.insert(self.powerups, PowerUp('mineral')) end)
     Timer.every(3, function() table.insert(self.powerups, PowerUp('o2Refill')) end)
     Timer.every(7, function() table.insert(self.powerups, PowerUp('healthRefill')) end)
     self.immunityTimer = 0
