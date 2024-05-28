@@ -7,7 +7,3 @@ Use the arrows to fly through the asteroids field and collect the plutonium need
 ### Gameplay
 [![Astronaut Gameplay YouTube](https://img.youtube.com/vi/JCndJ2YZFg4/0.jpg)](https://www.youtube.com/watch?v=JCndJ2YZFg4) <br>
 Youtube
-
-### Download
-[Windows Distribution](https://file.io/qMoLpVTi4VsE) (temporary)<br>
-Extract the file and launch the executable to play the game
