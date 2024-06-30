@@ -4,7 +4,7 @@
 ### Getting started
 - Download the zip file from the Realeases section.
 - Extract the files with 7zip (With windows default it doesn't work)
-- Launch Astronaut.exe
+- Launch Astronaut.exe <br>
 Enjoy!
 
 ### Controls
